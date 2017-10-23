@@ -17,8 +17,8 @@ log = logging.getLogger(__name__)
 def test_open_time():
     assert open_time(100, 200, "2017-01-01 00:00") == "2017-01-01 02:56" # Normal case under 200
     assert open_time(0, 200, "2017-01-01 00:00") == "2017-01-01 00:00" # Minimum
-    #assert open_time(305, 300, "2017-01-01 00:00") == "2017-01-01 09:00" # Case just over 300
-    #assert open_time(335, 300, "2017-01-01 00:00") == "2017-01-01 09:00" # Case over 300 + 10%
+    assert open_time(305, 300, "2017-01-01 00:00") == "2017-01-01 09:00" # Case just over 300
+    assert open_time(335, 300, "2017-01-01 00:00") == "2017-01-01 09:00" # Case over 300 + 10%
     assert open_time(1005, 1000, "2017-01-01 00:00") == "2017-01-02 09:05" # Maximum
     assert open_time(1200, 1000, "2017-01-01 00:00") == "2017-01-02 09:05" # Over maximum
 
