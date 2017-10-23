@@ -2,8 +2,6 @@
 # Project 4:  Brevet calculator
 #
 # Gnu make and bash are required. 
-#
-
 
 # Many recipes need to be run in the virtual environment, 
 # so run them as $(INVENV) command
@@ -24,7 +22,6 @@ credentials: brevets/credentials.ini
 brevets/credentials.ini: 
 	echo "You must manually create credentials.ini"
 
-
 ##
 ## Start, stop, test
 ##
@@ -38,14 +35,12 @@ stop: 	env credentials
 test:	env
 	($(INVENV) cd brevets; nosetests) 
 
-
 ##
 ## Preserve virtual environment for git repository
 ## to duplicate it on other targets
 ##
 dist:	env
 	$(INVENV) pip freeze >requirements.txt
-
 
 # 'clean' and 'veryclean' are typically used before checking 
 # things into git.  'clean' should leave the project ready to 
@@ -59,6 +54,4 @@ clean:
 veryclean:
 	make clean
 	rm -rf env
-
-
-
+	
