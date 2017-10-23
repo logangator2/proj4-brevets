@@ -6,6 +6,7 @@ and https://rusa.org/pages/rulesForRiders
 """
 import arrow
 import math
+import logging
 
 #  Keep
 #  these signatures even if you don't use all the
