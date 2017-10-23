@@ -71,10 +71,13 @@ def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
       working_cdk = control_dist_km
       working_total_time = 0
       for minkm, minspd in min_list:
-        if control_dist_km <= minkm:
+        if control_dist_km < minkm:
           total_time = working_total_time + time_calc(working_cdk, minspd)
           c_close = arrow.get(str(brevet_start_time)) # Make brevet_start_time into an arrow object
           c_close = c_close.shift(minutes=total_time) # Shifting brevet distance by control time difference
+          return str(c_close.format('YYYY-MM-DD HH:mm'))
+        if control_dist_km == minkm:
+          c_close = arrow.get(str(brevet_start_time)).shift(minutes=60)
           return str(c_close.format('YYYY-MM-DD HH:mm'))
         else:
           working_total_time += time_calc(minkm, minspd) # Minutes of this section, dictated by current maxkm and maxspd
