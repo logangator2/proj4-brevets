@@ -30,6 +30,7 @@ def open_time(control_dist_km, brevet_dist_km, brevet_start_time):
        An ISO 8601 format date string indicating the control open time.
        This will be in the same time zone as the brevet start time.
     """
+    brevet_dist_km = float(brevet_dist_km)
     working_cdk = control_dist_km
     working_total_time = 0
     for maxkm, maxspd in max_list:
@@ -55,6 +56,7 @@ def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
        An ISO 8601 format date string indicating the control close time.
        This will be in the same time zone as the brevet start time.
     """
+    brevet_dist_km = float(brevet_dist_km)
     ten_percent = (brevet_dist_km * 0.1)
     # Case when control is 100%-110% of brevet
     if control_dist_km < (brevet_dist_km + ten_percent) and control_dist_km >= brevet_dist_km:
@@ -69,7 +71,7 @@ def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
       working_cdk = control_dist_km
       working_total_time = 0
       for minkm, minspd in min_list:
-        if control_dist_km < minkm:
+        if control_dist_km <= minkm:
           total_time = working_total_time + time_calc(working_cdk, minspd)
           c_close = arrow.get(str(brevet_start_time)) # Make brevet_start_time into an arrow object
           c_close = c_close.shift(minutes=total_time) # Shifting brevet distance by control time difference
