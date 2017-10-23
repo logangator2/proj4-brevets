@@ -34,6 +34,7 @@ def open_time(control_dist_km, brevet_dist_km, brevet_start_time):
     brevet_dist_km = float(brevet_dist_km)
     working_cdk = control_dist_km
     working_total_time = 0
+    previous = 0
     for maxkm, maxspd in max_list:
       if control_dist_km < maxkm:
         total_time = working_total_time + time_calc(working_cdk, maxspd)
@@ -41,8 +42,9 @@ def open_time(control_dist_km, brevet_dist_km, brevet_start_time):
         c_open = c_open.shift(minutes=total_time) # Shifting brevet distance by control time difference
         return str(c_open.format('YYYY-MM-DD HH:mm'))
       else:
-        working_total_time += time_calc(maxkm, maxspd) # Minutes of this section, dictated by current maxkm and maxspd
-        working_cdk = control_dist_km - maxkm
+          working_total_time += time_calc(maxkm - previous, maxspd) # Minutes of this section, dictated by current maxkm and maxspd
+          working_cdk = control_dist_km - maxkm
+          previous = maxkm
 
 def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
     """
@@ -81,7 +83,7 @@ def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
           c_close = arrow.get(str(brevet_start_time)).shift(minutes=60)
           return str(c_close.format('YYYY-MM-DD HH:mm'))
         else:
-          working_total_time += time_calc(minkm, minspd) # Minutes of this section, dictated by current maxkm and maxspd
+          working_total_time += time_calc(minkm, minspd) # Minutes of this section, dictated by current minkm and minspd
           working_cdk = control_dist_km - minkm
 
 def time_calc(distance, speed):
